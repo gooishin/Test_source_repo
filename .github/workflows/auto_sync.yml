@@ -1,0 +1,91 @@
+# This is a basic workflow that is manually triggered
+
+name: Auto Sync To External Branch
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync-repo:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Set up Git credential
+        run: |
+          git config --global user.name 'gooishin'
+          git config --global user.email 'shing.shan.gooi@intel.com'
+
+      - name: Add destination repository as a remote with authentication
+        run: |
+          if ! git remote | grep destination; then
+            remote_url="https://github.com/gooishin/Test_Destination_repo.git"
+            git remote add destination "$remote_url"
+          fi
+          git remote -v
+          
+      - name: Fetch destination repository
+        env:
+          DESTINATION_REPO_PAT: ${{ secrets.DESTINATION_REPO_PAT }}
+        run:  |
+          git fetch destination || (echo "Fetch failed" && git remote -v && exit 1)
+
+      - name: Create sync branch
+        run: |
+          git checkout -b update-main
+          git reset --hard origin/main
+
+      - name: Exclude .github sync to external
+        run:
+          rsync -avz --exclude='.github' . ../update-main
+          cd ../update-main
+          git init
+          git remote add destination https://github.com/gooishin/Test_Destination_repo.git
+          git checkout -b update-main
+          git add .
+          git commit -m "Sync main branch from source repo"
+          
+      - name: Push sync branch to destination repository
+        run: |
+          cd ../update-main
+          git push destination update-main --force
+
+      - name: Create pull request
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const base = 'main';
+            const head = 'update-main';
+            const title = 'Sync main branch from source repo';
+            const body = 'This PR syncs the main branch from the source repository to the destination repository.';
+            
+            // Check if a PR already exists
+            const { data: existingPrs } = await github.pulls.list({
+              owner: 'gooishin',
+              repo: 'https://github.com/intel-sandbox/gooishin_devkit_test_external.git',
+              state: 'open',
+              head: `${owner}:${head}`,
+            });
+            
+            if (existingPrs.length === 0) {
+              // Create a new PR if none exists
+              await github.pulls.create({
+                owner: 'gooishin',
+                repo: 'https://github.com/intel-sandbox/gooishin_devkit_test_external.git',
+                title,
+                body,
+                head,
+                base,
+              });
+            } else {
+              console.log('A pull request already exists:', existingPrs[0].html_url);
+            }
