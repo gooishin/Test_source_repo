@@ -33,8 +33,6 @@ jobs:
           git remote -v
           
       - name: Fetch destination repository
-        env:
-          DESTINATION_REPO_PAT: ${{ secrets.DESTINATION_REPO_PAT }}
         run:  |
           git fetch destination || (echo "Fetch failed" && git remote -v && exit 1)
 
