@@ -42,12 +42,15 @@ jobs:
           git reset --hard origin/main
 
       - name: Exclude .github sync to external
-        run:
+        run: |
           rsync -avz --exclude='.github' . ../update-main
           cd ../update-main
           git init
-          git remote add destination https://github.com/gooishin/Test_Destination_repo.git
-          git checkout -b update-main
+          if ! git remote | grep destination; then
+            remote_url="https://github.com/gooishin/Test_Destination_repo.git"
+            git remote add destination "$remote_url"
+          fi
+          git checkout update-main
           git add .
           git commit -m "Sync main branch from source repo"
           
