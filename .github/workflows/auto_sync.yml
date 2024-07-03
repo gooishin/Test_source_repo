@@ -55,8 +55,8 @@ jobs:
           git commit -m "Sync main branch from source repo"
           
       - name: Push sync branch to destination repository
-        env:
-          DESTINATION_REPO_PAT: ${{ secrets.DESTINATION_REPO_PAT }}
+   #     env:
+   #       DESTINATION_REPO_PAT: ${{ secrets.DESTINATION_REPO_PAT }}
         run: |
           cd ../update-main
           git push destination update-main --force
