@@ -57,10 +57,9 @@ jobs:
           git commit -m "Sync main branch from source repo"
           
       - name: Push sync branch to destination repository
+        uses: x-actions/git-push@v1.0
         env:
           DESTINATION_REPO_PAT: ${{ secrets.DESTINATION_REPO_PAT }}
-        uses: x-actions/git-push@v1.0
-        with:
           GITHUB_EMAIL: "shing.shan.gooi@intel.com"
           GITHUB_USERNAME: "gooishin"
           PUBLISH_REPO: "https://<DESTINATION_REPO_PAT>github.com/gooishin/Test_Destination_repo.git"
