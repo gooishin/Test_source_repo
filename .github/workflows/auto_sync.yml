@@ -53,13 +53,11 @@ jobs:
           git add .
           git commit -m "Sync main branch from source repo"
           
-      - name: Push sync branch to destination repository
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.DESTINATION_REPO_PAT }}
-          repository: gooishin/Test_Destination_repo
-          branch: sync-main
-          force: true
+      - name: Push to destination repository
+        run: |
+          cd ../sync-main
+          git remote add destination https://x-access-token:${{ secrets.DESTINATION_REPO_PAT }}@github.com/gooishin/Test_Destination_repo.git
+          git push destination sync-main --force
 
       - name: Create pull request
         uses: actions/github-script@v6
