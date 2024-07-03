@@ -61,10 +61,10 @@ jobs:
           DESTINATION_REPO_PAT: ${{ secrets.DESTINATION_REPO_PAT }}
         uses: x-actions/git-push@v1.0
         with:
-          GITHUB_EMAIL: shing.shan.gooi@intel.com
-          GITHUB_USERNAME: gooishin
-          PUBLISH_REPO: https://<DESTINATION_REPO_PAT>github.com/gooishin/Test_Destination_repo.git
-          PUBLISH_BRANCH: update-main
+          GITHUB_EMAIL: "shing.shan.gooi@intel.com"
+          GITHUB_USERNAME: "gooishin"
+          PUBLISH_REPO: "https://<DESTINATION_REPO_PAT>github.com/gooishin/Test_Destination_repo.git"
+          PUBLISH_BRANCH: "update-main"
 
       - name: Create pull request
         uses: actions/github-script@v6
