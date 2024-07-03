@@ -26,7 +26,7 @@ jobs:
           git config --global user.name 'gooishin'
           git config --global user.email 'shing.shan.gooi@intel.com'
 
-      - name: Add destination repository as a remote with authentication
+      - name: Add destination repository as a remote
         run: |
           if ! git remote | grep destination; then
             remote_url="https://github.com/gooishin/Test_Destination_repo.git"
@@ -67,31 +67,25 @@ jobs:
       - name: Create pull request
         uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.DESTINATION_REPO_PAT }}
           script: |
-            const { owner, repo } = context.repo;
-            const base = 'main';
-            const head = 'update-main';
-            const title = 'Sync main branch from source repo';
-            const body = 'This PR syncs the main branch from the source repository to the destination repository.';
-            
-            // Check if a PR already exists
-            const { data: existingPrs } = await github.pulls.list({
+            const { data: pullRequests } = await github.pulls.list({
               owner: 'gooishin',
-              repo: 'https://github.com/intel-sandbox/gooishin_devkit_test_external.git',
+              repo: 'Test_Destination_repo',
               state: 'open',
-              head: `${owner}:${head}`,
+              head: 'gooishin:sync-main',
+              base: 'main'
             });
-            
-            if (existingPrs.length === 0) {
-              // Create a new PR if none exists
+          
+            if (pullRequests.length === 0) {
               await github.pulls.create({
                 owner: 'gooishin',
-                repo: 'https://github.com/intel-sandbox/gooishin_devkit_test_external.git',
-                title,
-                body,
-                head,
-                base,
+                repo: 'Test_Destination_repo',
+                title: 'Sync main branch from source repo',
+                head: 'sync-main',
+                base: 'main',
+                body: 'This PR syncs the main branch from the source repository to the destination repository.'
               });
             } else {
-              console.log('A pull request already exists:', existingPrs[0].html_url);
+              console.log('A pull request already exists:', pullRequests[0].html_url);
             }
