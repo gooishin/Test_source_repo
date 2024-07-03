@@ -27,7 +27,7 @@ jobs:
       - name: Add destination repository as a remote
         run: |
           if ! git remote | grep destination; then
-            remote_url="https://github.com/gooishin/Test_Destination_repo.git"
+            remote_url="https://${{ secrets.DESTINATION_REPO_PAT }}@github.com/gooishin/Test_Destination_repo.git"
             git remote add destination "$remote_url"
           fi
           git remote -v
@@ -47,7 +47,7 @@ jobs:
           cd ../update-main
           git init
           if ! git remote | grep destination; then
-            remote_url="https://github.com/gooishin/Test_Destination_repo.git"
+            remote_url="https:${{ secrets.DESTINATION_REPO_PAT }}@//github.com/gooishin/Test_Destination_repo.git"
             git remote add destination "$remote_url"
           fi
           git checkout update-main
