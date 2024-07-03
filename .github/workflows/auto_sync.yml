@@ -59,7 +59,7 @@ jobs:
       - name: Push sync branch to destination repository
         uses: ad-m/github-push-action@v0.6.0
         with:
-          github_token: ${{ secrets.DESTINATION_REPO_PAT }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           repository: gooishin/Test_Destination_repo
           branch: sync-main
           force: true
