@@ -57,13 +57,12 @@ jobs:
           git commit -m "Sync main branch from source repo"
           
       - name: Push sync branch to destination repository
-        uses: x-actions/git-push@v1.0
-        env:
-          DESTINATION_REPO_PAT: ${{ secrets.DESTINATION_REPO_PAT }}
-          GITHUB_EMAIL: "shing.shan.gooi@intel.com"
-          GITHUB_USERNAME: "gooishin"
-          PUBLISH_REPO: "https://${{ secrets.DESTINATION_REPO_PAT }}@github.com/gooishin/Test_Destination_repo.git"
-          PUBLISH_BRANCH: "update-main"
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.DESTINATION_REPO_PAT }}
+          repository: https://${github_token}@github.com/gooishin/Test_Destination_repo.git
+          branch: sync-main
+          force: true
 
       - name: Create pull request
         uses: actions/github-script@v6
