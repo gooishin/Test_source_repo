@@ -60,7 +60,7 @@ jobs:
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.DESTINATION_REPO_PAT }}
-          repository: https://${github_token}@github.com/gooishin/Test_Destination_repo.git
+          repository: https://github.com/gooishin/Test_Destination_repo.git
           branch: sync-main
           force: true
 
