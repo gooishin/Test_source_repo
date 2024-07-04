@@ -40,20 +40,14 @@ jobs:
 
       - name: Exclude .github sync to external
         run: |
-          rsync -avz --exclude='.github' . ../update-main
-          cd ../update-main
-          git init
-          if ! git remote | grep destination; then
-            remote_url="https:${{ secrets.DESTINATION_REPO_PAT }}@//github.com/gooishin/Test_Destination_repo.git"
-            git remote add destination "$remote_url"
-          fi
-          git checkout update-main
-          git add .
-          git commit -m "Sync main branch from source repo"
+         cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo
+         echo ".github/" >> .gitignore
+         git add .gitignore
+         git commit -m "ignore .github" .gitignore
           
       - name: Push to destination repository
         run: |
-          cd /home/user/actions-runner/_work/Test_source_repo/update-main
+          cd /home/user/actions-runner/_work/Test_source_repo/
           git push destination update-main:update-branch --force
 
       - name: Create pull request
