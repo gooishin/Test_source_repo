@@ -56,7 +56,7 @@ jobs:
       - name: Push to destination repository
         run: |
           cd /home/user/actions-runner/_work/Test_source_repo/update-main
-          git push destination sync-main --force
+          git push destination update-main --force
 
       - name: Create pull request
         uses: actions/github-script@v6
@@ -67,7 +67,7 @@ jobs:
               owner: 'gooishin',
               repo: 'Test_Destination_repo',
               state: 'open',
-              head: 'gooishin:sync-main',
+              head: 'gooishin:update-main',
               base: 'main'
             });
           
@@ -76,7 +76,7 @@ jobs:
                 owner: 'gooishin',
                 repo: 'Test_Destination_repo',
                 title: 'Sync main branch from source repo',
-                head: 'sync-main',
+                head: 'update-main',
                 base: 'main',
                 body: 'This PR syncs the main branch from the source repository to the destination repository.'
               });
