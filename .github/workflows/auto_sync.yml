@@ -56,7 +56,6 @@ jobs:
       - name: Push to destination repository
         run: |
           cd /home/user/actions-runner/_work/Test_source_repo/update-main
-          git remote add destination https://x-access-token:${{ secrets.DESTINATION_REPO_PAT }}@github.com/gooishin/Test_Destination_repo.git
           git push destination sync-main --force
 
       - name: Create pull request
