@@ -39,7 +39,14 @@ jobs:
          echo ".github/" >> .gitignore
          git add .gitignore
          git commit -m "ignore .github" .gitignore
-          
+
+      - name: Create branch at destination repo
+        run: |
+          cd /home/user/actions-runner/_work/
+          git clone https://github.com/gooishin/Test_Destination_repo.git
+          cd Test_Destination_repo
+          git checkout -b update-branch
+      
       - name: Push to destination repository
         run: |
           cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo
