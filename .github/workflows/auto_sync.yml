@@ -54,7 +54,7 @@ jobs:
       - name: Push to destination repository
         run: |
           cd /home/user/actions-runner/_work/Test_source_repo/update-main
-          git push destination update-main --force
+          git push destination update-main:update-branch --force
 
       - name: Create pull request
         uses: actions/github-script@v6
