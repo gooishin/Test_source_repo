@@ -33,11 +33,6 @@ jobs:
         run:  |
           git fetch destination || (echo "Fetch failed" && git remote -v && exit 1)
 
-      - name: Create sync branch
-        run: |
-          git checkout -b update-main
-          git reset --hard origin/main
-
       - name: Exclude .github sync to external
         run: |
          cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo
