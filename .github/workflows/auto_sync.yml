@@ -43,7 +43,7 @@ jobs:
       - name: Checkout destination repo
         uses: actions/checkout@v4.1.7
         with:
-          repository: 'https://github.com/gooishin/Test_Destination_repo.git'
+          repository: 'gooishin/Test_Destination_repo'
           token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
           paht: '/home/user/actions-runner/_work/'
           
