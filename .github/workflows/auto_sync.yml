@@ -12,8 +12,11 @@ jobs:
 
     steps:
       - name: Checkout source repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.1.7
         with:
+          repository: 'gooishin/Test_source_repo'
+          token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
+          path: '/home/user/actions-runner/_work/'
           ref: main
 
       - name: Set up Git credential
@@ -23,7 +26,7 @@ jobs:
 
       - name: Exclude .github sync to external
         run: |
-         cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo
+         cd /home/user/actions-runner/_work/Test_source_repo/
          echo ".github/" >> .gitignore
          git add .gitignore
          git commit -m "ignore .github" .gitignore
@@ -33,7 +36,7 @@ jobs:
         with:
           repository: 'gooishin/Test_Destination_repo'
           token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
-          paht: '/home/user/actions-runner/_work/'
+          path: '/home/user/actions-runner/_work/'
           
       - name: Create branch at destination repo
         run: |
