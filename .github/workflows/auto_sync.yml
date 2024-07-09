@@ -14,10 +14,7 @@ jobs:
       - name: Checkout source repository
         uses: actions/checkout@v4.1.7
         with:
-          repository: 'gooishin/Test_source_repo'
-          token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
-          path: 'Test_source_repo'
-          ref: main
+          fetch-depth: 2
 
       - name: Set up Git credential
         run: |
@@ -26,7 +23,7 @@ jobs:
 
       - name: Exclude .github sync to external
         run: |
-         cd /home/user/actions-runner/_work/Test_source_repo/
+         cd Test_source_repo
          echo ".github/" >> .gitignore
          git add .gitignore
          git commit -m "ignore .github" .gitignore
@@ -40,12 +37,12 @@ jobs:
           
       - name: Create branch at destination repo
         run: |
-          cd /home/user/actions-runner/_work/Test_Destination_repo
+          cd Test_Destination_repo
           git checkout -b update-branch
       
       - name: Push to destination repository
         run: |
-          cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo
+          cd Test_source_repo
           git remote add destination "https://github.com/gooishin/Test_Destination_repo.git"
           git push destination main:update-branch --force
 
