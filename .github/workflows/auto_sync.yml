@@ -21,18 +21,6 @@ jobs:
           git config --global user.name 'gooishin'
           git config --global user.email 'shing.shan.gooi@intel.com'
 
-      - name: Add destination repository as a remote
-        run: |
-          if ! git remote | grep destination; then
-            remote_url="https://github.com/gooishin/Test_Destination_repo.git"
-            git remote add destination "$remote_url"
-          fi
-          git remote -v
-          
-      - name: Fetch destination repository
-        run:  |
-          git fetch destination || (echo "Fetch failed" && git remote -v && exit 1)
-
       - name: Exclude .github sync to external
         run: |
          cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo
@@ -55,6 +43,7 @@ jobs:
       - name: Push to destination repository
         run: |
           cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo
+          git remote add destination "https://github.com/gooishin/Test_Destination_repo.git"
           git push destination main:update-branch --force
 
       - name: Create pull request
