@@ -24,7 +24,7 @@ jobs:
       - name: Add destination repository as a remote
         run: |
           if ! git remote | grep destination; then
-            remote_url="https://${{ secrets.DESTINATION_REPO_PAT }}@github.com/gooishin/Test_Destination_repo.git"
+            remote_url="https://github.com/gooishin/Test_Destination_repo.git"
             git remote add destination "$remote_url"
           fi
           git remote -v
@@ -40,11 +40,16 @@ jobs:
          git add .gitignore
          git commit -m "ignore .github" .gitignore
 
+      - name: Checkout destination repo
+        uses: actions/checkout@v4.1.7
+        with:
+          repository: 'https://github.com/gooishin/Test_Destination_repo.git'
+          token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
+          paht: '/home/user/actions-runner/_work/'
+          
       - name: Create branch at destination repo
         run: |
-          cd /home/user/actions-runner/_work/
-          git clone https://github.com/gooishin/Test_Destination_repo.git
-          cd Test_Destination_repo
+          cd /home/user/actions-runner/_work/Test_Destination_repo
           git checkout -b update-branch
       
       - name: Push to destination repository
@@ -55,7 +60,7 @@ jobs:
       - name: Create pull request
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.DESTINATION_REPO_PAT }}
+          github-token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
           script: |
             const { data: pullRequests } = await github.pulls.list({
               owner: 'gooishin',
