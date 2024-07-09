@@ -33,11 +33,11 @@ jobs:
         with:
           repository: 'gooishin/Test_Destination_repo'
           token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
-          path: 'Test_Destination_repo'
+          path: 'cd /home/user/actions-runner/_work/Test_Destination_repo'
           
       - name: Create branch at destination repo
         run: |
-          cd /home/user/actions-runner/_work/Test_Destination_repo/Test_Destination_repo
+          cd /home/user/actions-runner/_work/Test_Destination_repo
           git checkout -b update-branch
       
       - name: Push to destination repository
