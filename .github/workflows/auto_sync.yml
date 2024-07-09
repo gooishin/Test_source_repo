@@ -33,7 +33,7 @@ jobs:
         with:
           repository: 'gooishin/Test_Destination_repo'
           token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
-          path: 'cd /home/user/actions-runner/_work/Test_Destination_repo'
+          path: '/home/user/actions-runner/_work/Test_Destination_repo'
           
       - name: Create branch at destination repo
         run: |
