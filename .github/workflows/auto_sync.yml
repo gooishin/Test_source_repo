@@ -26,7 +26,7 @@ jobs:
         with:
           repository: 'gooishin/Test_Destination_repo'
           token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
-          path: 'Destination'
+          path: '/home/user/actions-runner/_work/Destination'
 
       - name: Exclude .github sync to external
         run: |
