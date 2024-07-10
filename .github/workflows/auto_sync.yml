@@ -15,7 +15,12 @@ jobs:
         uses: actions/checkout@v4.1.7
         with:
           fetch-depth: 2
-
+      
+      - name: Sync files to temporary directory
+        run: |
+          mkdir temp_repo
+          rsync -av --exclude='.github' ./* temp_repo/
+          
       - name: Set up Git credential
         run: |
           git config --global user.name 'gooishin'
@@ -25,13 +30,6 @@ jobs:
         run: |
           cd /home/user/actions-runner/_work/
           git clone https://${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}@github.com/gooishin/Test_Destination_repo.git
-
-      - name: Exclude .github sync to external
-        run: |
-         cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo
-         echo ".github/" >> .gitignore
-         git add .gitignore
-         git commit -m "ignore .github" .gitignore
          
       - name: Create branch at destination repo
         run: |
