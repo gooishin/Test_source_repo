@@ -14,6 +14,7 @@ jobs:
       - name: Checkout source repository
         uses: actions/checkout@v4.1.7
         with:
+          path: '/home/user/actions-runner/_work/'
           fetch-depth: 2
 
       - name: Set up Git credential
@@ -26,7 +27,7 @@ jobs:
         with:
           repository: 'gooishin/Test_Destination_repo'
           token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
-          path: '/home/user/actions-runner/_work/Destination'
+          path: '/home/user/actions-runner/_work/'
 
       - name: Exclude .github sync to external
         run: |
