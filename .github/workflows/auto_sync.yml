@@ -11,55 +11,55 @@ jobs:
     runs-on: self-hosted
 
     steps:
- #     - name: Checkout source repository
- #       uses: actions/checkout@v4.1.7
- #       with:
- #         fetch-depth: 2
+      - name: Checkout source repository
+        uses: actions/checkout@v4.1.7
+        with:
+          fetch-depth: 2
       
- #     - name: Sync files to temporary directory
- #       run: |
- #         mkdir temp_repo
- #         rsync -av --exclude='.github' ./* temp_repo/
+      - name: Sync files to temporary directory
+        run: |
+          mkdir temp_repo
+          rsync -av --exclude='.github' ./* temp_repo/
           
- #     - name: Set up Git credential
- #       run: |
- #         git config --global user.name 'gooishin'
- #         git config --global user.email 'shing.shan.gooi@intel.com'
+      - name: Set up Git credential
+        run: |
+          git config --global user.name 'gooishin'
+          git config --global user.email 'shing.shan.gooi@intel.com'
 
- #    - name: Checkout public repository
- #       uses: actions/checkout@v4
- #       with:
- #        repository: 'gooishin/Test_Destination_repo'
- #        token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
- #         path: 'public_repo' 
+      - name: Checkout public repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'gooishin/Test_Destination_repo'
+          token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
+          path: 'public_repo' 
       
- #     - name: Create branch at destination repo
- #       run: |
- #         cd public_repo/
- #         git checkout -b update-branch
- #         
- #     - name: Copy changes to public repository
- #       run: |
- #         cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo/public_repo/
- #         git checkout update-branch
- #         rsync -av --exclude='.git' --exclude='.github' --exclude='temp_repo' ../temp_repo/ .  
+      - name: Create branch at destination repo
+        run: |
+          cd public_repo/
+          git checkout -b update-branch
+          
+      - name: Copy changes to public repository
+        run: |
+          cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo/public_repo/
+          git checkout update-branch
+          rsync -av --exclude='.git' --exclude='.github' --exclude='temp_repo' ../temp_repo/ .  
 
- #     - name: Get last commit message
- #       id: get_commit_message
- #       run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
+      - name: Get last commit message
+        id: get_commit_message
+        run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
       
- #     - name: Push to destination repository
- #       run: |
- #         cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo/public_repo/
- #         git checkout update-branch
- #         git add .
- #         git commit -m "${{ env.message }}" || echo "No changes to commit"
- #         git push origin update-branch
+      - name: Push to destination repository
+        run: |
+          cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo/public_repo/
+          git checkout update-branch
+          git add .
+          git commit -m "${{ env.message }}" || echo "No changes to commit"
+          git push origin update-branch
 
- #     - name: Clean up temporary directory
- #       if: always()
- #       run: |
- #         rm -rf temp_repo public_repo
+      - name: Clean up temporary directory
+        if: always()
+        run: |
+          rm -rf temp_repo public_repo
       
       - name: Create pull request
         uses: actions/github-script@v6
