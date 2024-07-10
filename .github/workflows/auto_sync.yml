@@ -78,10 +78,10 @@ jobs:
               await github.rest.pulls.create({
                 owner: 'gooishin',
                 repo: 'Test_Destination_repo',
-                title: 'Sync main branch from source repo',
+                title: '${{ env.message }}',
                 head: 'update-branch',
                 base: 'main',
-                body: 'This PR syncs the main branch from the source repository to the destination repository.'
+                body: '${{ env.message }}'
               });
             } else {
               console.log('A pull request already exists:', pullRequests[0].html_url);
