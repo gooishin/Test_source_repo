@@ -68,7 +68,7 @@ jobs:
           script: |
             const { data: pullRequests } = await github.rest.pulls.list({
               owner: 'gooishin',
-              repo: 'Test_Destination_repo',
+              repo: 'gooishin/Test_Destination_repo',
               state: 'open',
               head: 'gooishin:update-main',
               base: 'main'
@@ -77,7 +77,7 @@ jobs:
             if (pullRequests.length === 0) {
               await github.rest.pulls.create({
                 owner: 'gooishin',
-                repo: 'Test_Destination_repo',
+                repo: 'gooishin/Test_Destination_repo',
                 title: 'Sync main branch from source repo',
                 head: 'gooishin:update-main',
                 base: 'main',
