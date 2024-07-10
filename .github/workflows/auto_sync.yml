@@ -75,7 +75,7 @@ jobs:
             });
           
             if (pullRequests.length === 0) {
-              await github.pulls.create({
+              await github.rest.pulls.create({
                 owner: 'gooishin',
                 repo: 'Test_Destination_repo',
                 title: 'Sync main branch from source repo',
