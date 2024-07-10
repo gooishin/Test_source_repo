@@ -26,15 +26,21 @@ jobs:
           git config --global user.name 'gooishin'
           git config --global user.email 'shing.shan.gooi@intel.com'
 
-      - name: Checkout destination repo
-        run: |
-          cd /home/user/actions-runner/_work/
-          git clone https://${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}@github.com/gooishin/Test_Destination_repo.git
-         
+      - name: Checkout public repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'gooishin/Test_Destination_repo'
+          token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
+          path: 'public_repo' 
+      
       - name: Create branch at destination repo
         run: |
-          cd /home/user/actions-runner/_work/Test_Destination_repo
+          cd public_repo/
           git checkout -b update-branch
+          
+      - name: Copy changes to public repository
+        run: |
+          rsync -av --exclude='.git' --exclude='.github' temp_repo/ public_repo/  
       
       - name: Push to destination repository
         run: |
