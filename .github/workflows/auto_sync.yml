@@ -79,7 +79,7 @@ jobs:
                 owner: 'gooishin',
                 repo: 'Test_Destination_repo',
                 title: 'Sync main branch from source repo',
-                head: 'update-main',
+                head: 'gooishin:update-main',
                 base: 'main',
                 body: 'This PR syncs the main branch from the source repository to the destination repository.'
               });
