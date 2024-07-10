@@ -45,7 +45,7 @@ jobs:
       - name: Push to destination repository
         run: |
           cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo/public_repo/
-          git push
+          git push --set-upstream origin update-branch
 
       - name: Clean up temporary directory
         if: always()
