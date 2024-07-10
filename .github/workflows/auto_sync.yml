@@ -40,7 +40,9 @@ jobs:
           
       - name: Copy changes to public repository
         run: |
-          rsync -av --exclude='.git' --exclude='.github' --exclude='temp_repo' public_repo/  
+          cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo/public_repo/
+          git checkout update-branch
+          rsync -av --exclude='.git' --exclude='.github' --exclude='temp_repo' ../temp_repo/ .  
 
       - name: Get last commit message
         id: get_commit_message
@@ -49,6 +51,7 @@ jobs:
       - name: Push to destination repository
         run: |
           cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo/public_repo/
+          git checkout update-branch
           git add .
           git commit -m "${{ env.message }}" || echo "No changes to commit"
           git push origin update-branch
