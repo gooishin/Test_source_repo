@@ -46,7 +46,7 @@ jobs:
 
       - name: Get last commit message
         id: get_commit_message
-        run: echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
+        run: echo "message=$(git log -1 --pretty=%B | tail -n1)" >> $GITHUB_ENV
       
       - name: Push to destination repository
         run: |
