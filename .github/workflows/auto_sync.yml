@@ -24,7 +24,7 @@ jobs:
       - name: Checkout destination repo
         run: |
           cd /home/user/actions-runner/_work/
-          git clone https://github.com/gooishin/Test_Destination_repo.git
+          git clone https://${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}@github.com/gooishin/Test_Destination_repo.git
 
       - name: Exclude .github sync to external
         run: |
