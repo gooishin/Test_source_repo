@@ -14,7 +14,6 @@ jobs:
       - name: Checkout source repository
         uses: actions/checkout@v4.1.7
         with:
-          path: '/home/user/actions-runner/_work/Test_source_repo'
           fetch-depth: 2
 
       - name: Set up Git credential
