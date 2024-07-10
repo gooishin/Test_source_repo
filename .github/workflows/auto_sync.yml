@@ -22,11 +22,9 @@ jobs:
           git config --global user.email 'shing.shan.gooi@intel.com'
 
       - name: Checkout destination repo
-        uses: actions/checkout@v4.1.7
-        with:
-          repository: 'gooishin/Test_Destination_repo'
-          token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
-          path: '/home/user/actions-runner/_work/'
+        run: |
+          cd /home/user/actions-runner/_work/
+          git clone https://github.com/gooishin/Test_Destination_repo.git
 
       - name: Exclude .github sync to external
         run: |
@@ -37,7 +35,7 @@ jobs:
          
       - name: Create branch at destination repo
         run: |
-          cd /home/user/actions-runner/_work/Destination/Test_Destination_repo
+          cd /home/user/actions-runner/_work/Test_Destination_repo
           git checkout -b update-branch
       
       - name: Push to destination repository
