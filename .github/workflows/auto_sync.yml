@@ -40,6 +40,8 @@ jobs:
         run: |
           cd public_repo
           git checkout -b update-branch
+          git branch --set-upstream-to=origin/main
+          git pull
           
       - name: Copy changes to public repository
         run: |
@@ -55,17 +57,14 @@ jobs:
         run: |
           cd public_repo
           git checkout update-branch
-          git pull
-          git branch --set-upstream-to=origin/update-branch
-          git pull
           git add .
           git commit -m "${{ env.message }}" || echo "No changes to commit"
           git push origin update-branch
 
-      #- name: Clean up temporary directory
-      #  if: always()
-      #  run: |
-      #    rm -rf temp_repo public_repo
+      - name: Clean up temporary directory
+        if: always()
+        run: |
+          rm -rf temp_repo public_repo
       
       - name: Create pull request
         uses: actions/github-script@v6
