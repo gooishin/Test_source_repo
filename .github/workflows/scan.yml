@@ -1,0 +1,16 @@
+name: 'Scan'
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+   test: 
+     name: test
+     runs-on: [self-hosted]
+     steps:
+       - name : Hello_World
+         run: |
+           echo "Hello World"
