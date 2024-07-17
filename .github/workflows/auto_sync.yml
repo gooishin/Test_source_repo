@@ -35,12 +35,12 @@ jobs:
       
       - name: Create branch at destination repo
         run: |
-          cd public_repo/
+          cd public_repo
           git checkout -b update-branch
           
       - name: Copy changes to public repository
         run: |
-          cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo/public_repo/
+          cd public_repo
           git checkout update-branch
           rsync -av --exclude='.git' --exclude='.github' --exclude='temp_repo' ../temp_repo/ .  
 
@@ -50,7 +50,7 @@ jobs:
       
       - name: Push to destination repository
         run: |
-          cd /home/user/actions-runner/_work/Test_source_repo/Test_source_repo/public_repo/
+          cd public_repo
           git checkout update-branch
           git add .
           git commit -m "${{ env.message }}" || echo "No changes to commit"
