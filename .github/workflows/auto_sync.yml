@@ -23,8 +23,8 @@ jobs:
           
       - name: Set up Git credential
         run: |
-          git config --global user.name 'Github Action'
-          git config --global user.email 'action@github.com'
+          git config --global user.name 'gooishin'
+          git config --global user.email 'shing.shan.gooi@intel.com'
 
       - name: Checkout public repository
         uses: actions/checkout@v4
