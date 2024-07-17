@@ -60,10 +60,10 @@ jobs:
           git commit -m "${{ env.message }}" || echo "No changes to commit"
           git push origin update-branch
 
-      #- name: Clean up temporary directory
-      #  if: always()
-      #  run: |
-      #    rm -rf temp_repo public_repo
+      - name: Clean up temporary directory
+        if: always()
+        run: |
+          rm -rf temp_repo public_repo
       
       - name: Create pull request
         uses: actions/github-script@v6
