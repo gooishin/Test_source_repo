@@ -2,12 +2,15 @@ name: Auto Sync To External Branch
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: [Scan]
+    types:
+        - completed
+    branches: [main]
 
 jobs:
   sync-repo:
+    if: ${{ github.event.workflow_run.event == 'push' }}
     runs-on: self-hosted
 
     steps:
