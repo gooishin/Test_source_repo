@@ -35,6 +35,10 @@ jobs:
           repository: 'gooishin/Test_Destination_repo'
           token: ${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}
           path: 'public_repo' 
+
+      - name: Get last commit message
+        id: get_commit_message
+        run: echo "message=$(git log -1 --pretty=%B | tail -n1)" >> $GITHUB_ENV
       
       - name: Create branch at destination repo
         run: |
@@ -49,11 +53,7 @@ jobs:
           git checkout update-branch
           rsync -av --exclude='.git' --exclude='.github' --exclude='temp_repo' ../temp_repo/ .
           git add --all
-          git commit -m "Update branch" || echo "No changes to commit"
-
-      - name: Get last commit message
-        id: get_commit_message
-        run: echo "message=$(git log -1 --pretty=%B | tail -n1)" >> $GITHUB_ENV
+          git commit -m "${{ env.message }}" || echo "No changes to commit"
       
       - name: Push to destination repository
         run: |
