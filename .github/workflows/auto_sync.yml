@@ -61,7 +61,7 @@ jobs:
           git checkout update-branch
           git add .
           git commit -m "${{ env.message }}" || echo "No changes to commit"
-          git push origin update-branch --force
+          git push origin update-branch
 
       - name: Clean up temporary directory
         if: always()
