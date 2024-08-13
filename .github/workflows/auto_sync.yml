@@ -44,7 +44,7 @@ jobs:
             echo "Commit message is empty or only whitespace."
           else
             echo "message=$commit_message" >> $GITHUB_ENV
-            echo "The last commit message is ${{ env.message }}"
+            echo "The last commit message is $commit_message"
           fi
       
       - name: Create branch at destination repo
