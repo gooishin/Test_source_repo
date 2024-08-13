@@ -38,7 +38,13 @@ jobs:
 
       - name: Get last commit message
         id: get_commit_message
-        run: echo "message=$(git log -1 --pretty=%B | tail -n1)" >> $GITHUB_ENV
+        run: |
+          commit_message=$(git log -1 --pretty=%B | tr -d '\n')
+          if [ -z "$commit_message" ]; then
+            echo "message=Empty commit message or only whitespace."
+          else
+            echo "message=$commit_message" >> $GITHUB_ENV
+          fi
       
       - name: Create branch at destination repo
         run: |
