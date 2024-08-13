@@ -41,9 +41,10 @@ jobs:
         run: |
           commit_message=$(git log -1 --pretty=%B | tr -d '\n')
           if [ -z "$commit_message" ]; then
-            echo "message=Empty commit message or only whitespace."
+            echo "Commit message is empty or only whitespace."
           else
             echo "message=$commit_message" >> $GITHUB_ENV
+            echo "The last commit message is ${{ env.message }}"
           fi
       
       - name: Create branch at destination repo
